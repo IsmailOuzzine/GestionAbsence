@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('cne')->unique();
             $table->unsignedBigInteger('classe_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('img_path');
 
             $table->foreign('classe_id')
                 ->references('id')

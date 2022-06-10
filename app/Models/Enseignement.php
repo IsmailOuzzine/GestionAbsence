@@ -18,7 +18,7 @@ class Enseignement extends Model
         return $this->belongsTo(Module::class)->first();
     }
 
-    public function absenceEnseignant () {
+    public function absenceEnseignants () {
         return $this->hasMany(AbsenceEnseignant::class);
     }
 }

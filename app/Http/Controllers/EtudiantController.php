@@ -57,17 +57,34 @@ class EtudiantController extends Controller
         $user->adresse = \request('adresse');
         $user->email = \request('email');
         $user->password = Hash::make(\request('password'));
+        $filename = \request('cne').'.'.$file->extension();
+        $user->img_path = $filename;
+        $file->move(public_path('images\etudiants'), $filename);
         $user->save();
 
         $etu = new Etudiant();
         $etu->cne = \request('cne');
         $etu->classe_id = Classe::findOrFail(\request('classe'))->id;
         $etu->user_id = $user->id;
-        $filename = $etu->cne.'.'.$file->extension();
-        $etu->img_path = $filename;
-        $file->move(public_path('images'), $filename);
         $etu->save();
 
-        print '<a href="/home">home</a>';
+        return redirect()->route('home');
+        // print '<a href="/home">home</a>';
+    }
+
+    public function absences($id) {
+        if ($id != ''.Auth::user()->id) {
+            return redirect()->route('etudiants.abs', Auth::user()->id);
+        }
+        $etud = Etudiant::where('user_id', Auth::user()->id)->first();
+
+        $data = [
+            'user' => Auth::user(),
+            'etud' => $etud,
+            'abs' => $etud->absences()
+                ->where('etudiant_id', $etud->id)
+                ->get(),
+        ];
+        return view('etudiant.absences', ['data' => $data]);
     }
 }

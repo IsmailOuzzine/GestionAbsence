@@ -2,11 +2,11 @@
 
 @section('content')
     <div id="body" class="bg-light p-3 container">
-        <div class="row bg-white p-4 rounded">
+        <div class="row bg-white p-4 rounded shadow-sm">
             <div class="col-3 text-center py-5" id="img-profile">
                 <img
-                    src="/images/{{ $student['etud']->img_path }}"
-                    class="rounded-circle"
+                    src="/images/etudiants/{{ $student['user']->img_path }}"
+                    class="rounded-circle shadow-sm"
                     alt="photo de profile"
                     height="auto"
                     width="80%"
@@ -26,8 +26,13 @@
                 </table>
             </div>
         </div>
-        <div class="row bg-white mt-3 p-4">
-            <h3 class="mx-auto">Vous vous êtes absenté {{ $student['nb'] }} fois dont {{ $student['nbj'] }} fois est justifiée.</h3>
+        <div class="row bg-white mt-3 p-4 shadow-sm rounded">
+            <div class="col">
+                <h3 class="d-inline-block">Vous vous êtes absenté {{ $student['nb'] }} fois dont {{ $student['nbj'] }} fois est justifiée.</h3>
+                <a href="/etudiants/{{ $student['user']->id }}/absences" class="btn btn-secondary float-end">
+                    Voir plus
+                </a>
+            </div>
         </div>
     </div>
 @endsection

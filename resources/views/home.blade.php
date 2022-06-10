@@ -19,7 +19,8 @@
                 <div class="align-content-lg-center p-4 bg-info">
                     <h3>You are a {{ Auth::user()->role }}</h3>
                     @if(Auth::user()->role == 'admin')
-                        <a href="/etudiants/create" class="btn btn-light">Ajouter un étudiant</a>
+                        <a href="/etudiants/create" class="btn btn-light mx-1">Ajouter un étudiant</a>
+                        <a href="/enseignants/create" class="btn btn-light mx-1">Ajouter un enseignant</a>
                     @endif
                 </div>
             </div>

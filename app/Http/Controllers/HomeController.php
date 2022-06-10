@@ -21,14 +21,13 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         if (Auth::user()->role == 'admin')
             return view('home');
         elseif (Auth::user()->role == 'etudiant'){
-
             $etud = Etudiant::where('user_id', Auth::user()->id)->first();
 
             $student = [
@@ -38,6 +37,9 @@ class HomeController extends Controller
                 'nbj' => $etud->absences()->where('justified', true)->count(),
             ];
             return view('etudiant.index', ['student' => $student]);
+        }
+        elseif (Auth::user()->role == 'enseignant') {
+            return redirect()->route('enseignants.profile');
         }
     }
 }

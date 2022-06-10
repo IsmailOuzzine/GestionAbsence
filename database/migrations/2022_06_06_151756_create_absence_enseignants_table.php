@@ -18,12 +18,13 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('enseignement_id');
             $table->date('date');
+            $table->boolean('present');
+            $table->boolean('justified');
 
             $table->foreign('enseignement_id')
                 ->references('id')
                 ->on('enseignements')
                 ->onDelete('cascade');
-            $table->boolean('justified');
         });
     }
 

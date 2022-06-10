@@ -68,15 +68,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        /*
-        error_log($data['name']);
-        error_log($data['prenom']);
-        error_log($data['adresse']);
-        error_log($data['email']);
-        error_log($data['password']);
-        error_log($data['role']);
-        */
-
+        $image = $data['photo'];
+        if (($image->extension() != 'png')  && ($image->extension() != 'jpg')) {
+            $message = $image->extension()." files are not accepted !";
+            print $message;
+            return;
+        }
         $user = new User();
         $user->nom = $data['name'];
         $user->email = $data['email'];
@@ -84,6 +81,11 @@ class RegisterController extends Controller
         $user->role = $data['role'];
         $user->prenom = $data['prenom'];
         $user->adresse = $data['adresse'];
+        $filename = $data['name'].'_'.$data['prenom'].'.'.$image->extension();
+
+        $user->img_path = $filename;
+
+        $image->move(public_path('images/admin'), $filename);
 
         $user->save();
 

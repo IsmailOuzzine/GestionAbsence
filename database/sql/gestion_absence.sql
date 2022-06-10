@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 08 juin 2022 à 13:33
+-- Généré le : ven. 10 juin 2022 à 20:26
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.0.13
 
@@ -38,6 +38,15 @@ CREATE TABLE `absences` (
   `present` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `absences`
+--
+
+INSERT INTO `absences` (`id`, `created_at`, `updated_at`, `etudiant_id`, `module_id`, `date`, `justified`, `present`) VALUES
+(1, NULL, NULL, 1, 3, '2022-06-09', 0, 0),
+(2, NULL, NULL, 1, 1, '2022-06-07', 0, 0),
+(3, NULL, NULL, 1, 5, '2022-06-10', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -50,8 +59,26 @@ CREATE TABLE `absence_enseignants` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `enseignement_id` bigint(20) UNSIGNED NOT NULL,
   `date` date NOT NULL,
-  `justified` tinyint(1) NOT NULL
+  `justified` tinyint(1) NOT NULL,
+  `present` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `absence_enseignants`
+--
+
+INSERT INTO `absence_enseignants` (`id`, `created_at`, `updated_at`, `enseignement_id`, `date`, `justified`, `present`) VALUES
+(3, NULL, NULL, 4, '2022-06-09', 0, 0),
+(4, NULL, NULL, 4, '2022-06-02', 1, 0),
+(5, NULL, NULL, 4, '2022-05-05', 1, 0),
+(6, NULL, NULL, 4, '2022-05-12', 0, 1),
+(7, NULL, NULL, 4, '2022-05-19', 0, 1),
+(8, NULL, NULL, 4, '2022-05-26', 0, 1),
+(9, NULL, NULL, 5, '2020-03-03', 0, 1),
+(10, NULL, NULL, 5, '2020-03-10', 0, 1),
+(11, NULL, NULL, 5, '2020-03-17', 0, 0),
+(12, NULL, NULL, 5, '2020-03-24', 0, 0),
+(13, NULL, NULL, 5, '2020-03-31', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -73,9 +100,9 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `created_at`, `updated_at`, `nom`, `annee`, `filiere_id`) VALUES
-(1, NULL, NULL, 'GI 2', '2', 1),
-(2, NULL, NULL, 'ISESE 2', '2', 2),
-(3, NULL, NULL, 'GSI 2', '2', 3);
+(1, NULL, NULL, 'CI-GI-2', '2', 1),
+(2, NULL, NULL, 'ISESE-2', '2', 2),
+(3, NULL, NULL, 'GSI-2', '2', 3);
 
 -- --------------------------------------------------------
 
@@ -89,6 +116,13 @@ CREATE TABLE `enseignants` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `enseignants`
+--
+
+INSERT INTO `enseignants` (`id`, `created_at`, `updated_at`, `user_id`) VALUES
+(2, '2022-06-10 17:11:52', '2022-06-10 17:11:52', 6);
 
 -- --------------------------------------------------------
 
@@ -105,6 +139,14 @@ CREATE TABLE `enseignements` (
   `annee_universitaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `enseignements`
+--
+
+INSERT INTO `enseignements` (`id`, `created_at`, `updated_at`, `enseignant_id`, `module_id`, `annee_universitaire`) VALUES
+(4, NULL, NULL, 2, 5, '2021/2022'),
+(5, NULL, NULL, 2, 2, '2020/2021');
+
 -- --------------------------------------------------------
 
 --
@@ -117,16 +159,15 @@ CREATE TABLE `etudiants` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `cne` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `classe_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `img_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `etudiants`
 --
 
-INSERT INTO `etudiants` (`id`, `created_at`, `updated_at`, `cne`, `classe_id`, `user_id`, `img_path`) VALUES
-(1, '2022-06-08 10:27:48', '2022-06-08 10:27:48', 'F130148073', 1, 2, 'F130148073.jpg');
+INSERT INTO `etudiants` (`id`, `created_at`, `updated_at`, `cne`, `classe_id`, `user_id`) VALUES
+(1, '2022-06-09 14:21:11', '2022-06-09 14:21:11', 'F130148073', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -211,6 +252,21 @@ CREATE TABLE `modules` (
   `filiere_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `modules`
+--
+
+INSERT INTO `modules` (`id`, `created_at`, `updated_at`, `nom`, `annee`, `filiere_id`) VALUES
+(1, NULL, NULL, 'POO Java', '1', 1),
+(2, NULL, NULL, 'Programmation systeme', '2', 1),
+(3, NULL, NULL, 'Developpement web', '2', 1),
+(4, NULL, NULL, 'Reseaux des capteurs', '2', 2),
+(5, NULL, NULL, 'Administration systeme', '2', 2),
+(6, NULL, NULL, 'Traitement du signal', '2', 2),
+(7, NULL, NULL, 'Gestion de production', '2', 3),
+(8, NULL, NULL, 'Informatique decisionnelle', '2', 3),
+(9, NULL, NULL, 'Energies renouvlables', '2', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -258,16 +314,18 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `img_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `nom`, `prenom`, `adresse`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'FST', 'Settat', 'Settat', 'admin', 'admin.fst@uhp.ac.ma', NULL, '$2y$10$no6xPvc8wFevYTD0SrInOeyggDMvbK5HPxUyj8J//lMj/Qkttk/Du', NULL, '2022-06-08 10:21:14', '2022-06-08 10:21:14'),
-(2, 'Ouzzine', 'Ismail', 'Berrechid', 'etudiant', 'ismail@fsts.ma', NULL, '$2y$10$V9hfpMrsCvdjypsEo1yJteNoZBIniXzfqZTHYzbrksHsjUhkzyGIa', NULL, '2022-06-08 10:27:48', '2022-06-08 10:27:48');
+INSERT INTO `users` (`id`, `nom`, `prenom`, `adresse`, `role`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `img_path`) VALUES
+(1, 'FSTS', 'admin', 'Settat', 'admin', 'admin.fst@uhp.ac.ma', NULL, '$2y$10$gHJkNrAASF8Fse0FKOjWDuR8n70elM13qefDbO5jnXSMGcTufhWlW', NULL, '2022-06-09 14:16:50', '2022-06-09 14:16:50', 'FSTS_admin.png'),
+(2, 'Ouzzine', 'Ismail', 'Berrechid', 'etudiant', 'ismail@fsts.ma', NULL, '$2y$10$Rz54b1dWowtVXW2x5UauS.LNB5wZZDwrpqLbHmfSSuJxQippQNpsS', NULL, '2022-06-09 14:21:11', '2022-06-09 14:21:11', 'F130148073.jpg'),
+(6, 'Mohamadi', 'Nizar', 'Virtual city', 'enseignant', 'nizar@fsts.ma', NULL, '$2y$10$RGXv1hPsiEITgz2QegohsOLN2I3GAxL3EBJIYVJtJJEIRUoonWyBu', NULL, '2022-06-10 17:11:52', '2022-06-10 17:11:52', 'Mohamadi_Nizar.png');
 
 --
 -- Index pour les tables déchargées
@@ -374,13 +432,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `absences`
 --
 ALTER TABLE `absences`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `absence_enseignants`
 --
 ALTER TABLE `absence_enseignants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `classes`
@@ -392,13 +450,13 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT pour la table `enseignants`
 --
 ALTER TABLE `enseignants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `enseignements`
 --
 ALTER TABLE `enseignements`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `etudiants`
@@ -428,7 +486,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT pour la table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `personal_access_tokens`
@@ -440,7 +498,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées
